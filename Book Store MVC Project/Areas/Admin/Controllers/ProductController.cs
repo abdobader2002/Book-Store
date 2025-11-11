@@ -1,20 +1,22 @@
-﻿
-using BookStore.DataAccess.Data;
+﻿using BookStore.DataAccess.Data;
+using BookStore.DataAccess.Repository;
+using BookStore.DataAccess.Repository.IReopsitory;
 using BookStore.Models;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Book_Store_MVC_Project.Controllers
+namespace Book_Store_MVC_Project.Areas.Admin.Controllers
 {
+    [Area("Admin")]
     public class ProductController : Controller
     {
-        private readonly ApplicationDbContext _db;
-        public ProductController(ApplicationDbContext db)
+        private readonly IUnitOfWork _unitOfWork;
+        public ProductController(IUnitOfWork unitOfWork)
         {
-            _db = db;
+            _unitOfWork = unitOfWork;
         }
         public IActionResult Index()
         {
-            List<Product> objProductList = _db.Products.ToList();
+            List<Product> objProductList = _unitOfWork.Product.GetAll().ToList();
 
 
             return View(objProductList);
@@ -32,8 +34,8 @@ namespace Book_Store_MVC_Project.Controllers
             
             if (ModelState.IsValid)
             {
-                _db.Products.Add(obj);
-                _db.SaveChanges();
+                _unitOfWork.Product.Add(obj);
+                _unitOfWork.Save();
                 TempData["success"] = "Product created successfully";
                 return RedirectToAction("Index");
             }
@@ -46,9 +48,9 @@ namespace Book_Store_MVC_Project.Controllers
             {
                 return NotFound();
             }
-            Product? productFromDb = _db.Products.Find(id);
-            //Product? productFromDb1 = _db.Products.FirstOrDefault(u => u.Id == id);
-            //Product? productFromDb2 = _db.Products.Where(u => u.Id == id).FirstOrDefault();
+            Product? productFromDb = _unitOfWork.Product.Get(u => u.Id == id);
+            //Product? productFromDb1 = _db.Categories.FirstOrDefault(u => u.Id == id);
+            //Product? productFromDb2 = _db.Categories.Where(u => u.Id == id).FirstOrDefault();
 
             if (productFromDb == null)
             {
@@ -63,9 +65,9 @@ namespace Book_Store_MVC_Project.Controllers
 
             if (ModelState.IsValid)
             {
-                _db.Products.Update(obj);
-                _db.SaveChanges();
-                TempData["success"] = "Product Updated successfully";
+                _unitOfWork.Product.Update(obj);
+                _unitOfWork.Save();
+                 TempData["success"] = "Product Updated successfully";
                 return RedirectToAction("Index");
             }
             return View();
@@ -77,9 +79,9 @@ namespace Book_Store_MVC_Project.Controllers
             {
                 return NotFound();
             }
-            Product? productFromDb = _db.Products.Find(id);
-            //Product? productFromDb1 = _db.Products.FirstOrDefault(u=>u.Id==id);
-            //Product? productFromDb2 = _db.Products.Where(u=>u.Id==id).FirstOrDefault();
+            Product? productFromDb = _unitOfWork.Product.Get(u => u.Id == id);
+            //Product? productFromDb1 = _db.Categories.FirstOrDefault(u=>u.Id==id);
+            //Product? productFromDb2 = _db.Categories.Where(u=>u.Id==id).FirstOrDefault();
 
             if (productFromDb == null)
             {
@@ -90,14 +92,14 @@ namespace Book_Store_MVC_Project.Controllers
         [HttpPost, ActionName("Delete")]
         public IActionResult DeletePOST(int? id)
         {
-            Product? obj = _db.Products.Find(id);
+            Product? obj = _unitOfWork.Product.Get(u => u.Id == id);
             if (obj == null)
             {
                 return NotFound();
             }
-            _db.Products.Remove(obj);
-            _db.SaveChanges();
-            TempData["success"] = "Product Deleted successfully";
+            _unitOfWork.Product.Remove(obj);
+            _unitOfWork.Save();
+             TempData["success"] = "Product Deleted successfully";
             return RedirectToAction("Index");
         }
     }
