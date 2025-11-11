@@ -2,7 +2,9 @@
 using BookStore.DataAccess.Repository;
 using BookStore.DataAccess.Repository.IReopsitory;
 using BookStore.Models;
+using BookStore.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Book_Store_MVC_Project.Areas.Admin.Controllers
 {
@@ -17,15 +19,25 @@ namespace Book_Store_MVC_Project.Areas.Admin.Controllers
         public IActionResult Index()
         {
             List<Product> objProductList = _unitOfWork.Product.GetAll().ToList();
-
+            
 
             return View(objProductList);
         }
         public IActionResult Create()
         {
-
-
-            return View();
+            //ViewBag.Categories = Categories;
+            ProductViewModel productViewModel = new()
+            {
+                CategoryList = _unitOfWork.Category.GetAll().Select(c =>
+                new SelectListItem
+                {
+                    Text = c.Name,
+                    Value = c.Id.ToString()
+                }
+                ),
+                Product = new Product()
+            };
+            return View(productViewModel);
         }
 
         [HttpPost]

@@ -9,13 +9,13 @@ namespace BookStore.Models
         [Key]
         public int Id { get; set; }
         [Required]
-        public string Title { get; set; }= string.Empty;
-        public string Description { get; set; }= string.Empty;
+        public string Title { get; set; }
+        public string Description { get; set; }
         [Required]
-        public string ISBN { get; set; }= string.Empty;
+        public string ISBN { get; set; }
 
         [Required]
-        public string Author { get; set; }= string.Empty;
+        public string Author { get; set; }
 
         [Required]
         [DisplayName("List Price")]
@@ -41,6 +41,8 @@ namespace BookStore.Models
         public int CategoryId { get; set; }
         [ForeignKey("CategoryId")]
         public Category Category { get; set; }
+
+        public string ImgUrl { get; set; }
 
     }
 }

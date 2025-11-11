@@ -30,7 +30,9 @@ namespace BookStore.DataAccess.Data
                     ListPrice = 99.00,
                     price = 90.00,
                     Price50Plus = 85.00,
-                    Price100Plus = 80.00
+                    Price100Plus = 80.00,
+                    CategoryId = 2,
+                    ImgUrl=""
                     }
                 
                 
