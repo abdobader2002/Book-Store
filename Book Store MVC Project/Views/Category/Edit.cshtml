@@ -1,0 +1,88 @@
+﻿@model Category
+
+<form method="post" novalidate>
+    <input asp-for="Id" type="hidden" />
+
+    <div class="create-card">
+        <div class="create-header">
+            <div>
+                <h2 class="h5 mb-0">Edit Category</h2>
+               
+            </div>
+            <div>
+                <a asp-controller="Category" asp-action="Index" class="btn btn-outline-secondary btn-wide">
+                    <i class="bi bi-list-ul"></i> Back to List
+                </a>
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Name" class="form-label"></label>
+            <input asp-for="Name" class="form-control form-control-lg" />
+            <div class="field-help">A short, descriptive category name.</div>
+            <span asp-validation-for="Name" class="text-danger field-error"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="DisplayOrder" class="form-label"></label>
+            <input asp-for="DisplayOrder" class="form-control form-control-lg" />
+            <div class="field-help">Lower numbers appear first in lists.</div>
+            <span asp-validation-for="DisplayOrder" class="text-danger field-error"></span>
+        </div>
+
+        <div class="form-actions d-flex flex-wrap gap-2">
+            <button type="submit" class="btn btn-primary btn-wide">Update</button>
+            <a asp-controller="Category" asp-action="Index" class="btn btn-outline-secondary btn-wide">
+                Cancel
+            </a>
+        </div>
+    </div>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+@*    
+@model Category
+
+
+<form method="post">
+    <input asp-for="Id" hidden />
+
+    <div class="border p-3 mt-4">
+        <div class="row pb-2">
+            <h2 class="text-primary">Edit Category</h2>
+            <hr />
+        </div>
+        @*<div asp-validation-summary="ModelOnly"></div>*@
+       @* <div class="mb-3 row p-1">
+            <label asp-for="Name" class="p-0"></label>
+            <input asp-for="Name" class="form-control" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+        <div class="mb-3 row p-1">
+            <label asp-for="DisplayOrder" class="p-0"></label>
+            <input asp-for="DisplayOrder" class="form-control" />
+            <span asp-validation-for="DisplayOrder" class="text-danger"></span>
+        </div>
+
+        <div class="row">
+            <div class="col-6 col-md-3">
+                <button type="submit" class="btn btn-primary form-control">Update</button>
+            </div>
+            <div class="col-6 col-md-3">
+                <a asp-controller="Category" asp-action="Index" class="btn btn-secondary border  form-control">
+                    Back to List
+                </a>
+            </div>
+        </div>
+
+
+    </div>
+</form>
+
+@section Scripts {
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+}   *@
