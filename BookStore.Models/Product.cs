@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BookStore.Models
 {
@@ -36,6 +37,10 @@ namespace BookStore.Models
         [DisplayName("Price 100+")]
         [Range(1, 10000, ErrorMessage = "List Price must be between 1 and 10,000")]
         public double Price100Plus { get; set; }
+
+        public int CategoryId { get; set; }
+        [ForeignKey("CategoryId")]
+        public Category Category { get; set; }
 
     }
 }
