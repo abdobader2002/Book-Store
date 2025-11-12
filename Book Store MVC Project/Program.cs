@@ -17,11 +17,7 @@ namespace Book_Store_MVC_Project
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
               options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
             builder.Services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();
-            //builder.Services.ConfigureApplicationCookie(options => {
-            //    options.LoginPath = $"/Identity/Account/Login";
-            //    options.LogoutPath = $"/Identity/Account/Logout";
-            //    options.AccessDeniedPath = $"/Identity/Account/AccessDenied";
-            //});
+            
             builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
             var app = builder.Build();
 
@@ -43,7 +39,9 @@ namespace Book_Store_MVC_Project
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{area=Customer}/{controller=Home}/{action=Index}/{id?}");
-
+            app.MapControllerRoute(
+                name: "areas",
+                pattern: "{area=Identity}/{controller=Account}/{action=Login}/{id?}");
             app.Run();
         }
     }

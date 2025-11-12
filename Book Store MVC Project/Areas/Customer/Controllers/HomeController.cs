@@ -1,12 +1,14 @@
 using BookStore.DataAccess.Repository;
 using BookStore.DataAccess.Repository.IReopsitory;
 using BookStore.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
 namespace Book_Store_MVC_Project.Areas.Customer.Controllers
 {
     [Area("Customer")]
+
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -17,7 +19,7 @@ namespace Book_Store_MVC_Project.Areas.Customer.Controllers
             _unitOfWork = unitOfWork;
             _logger = logger;
         }
-
+        
         public IActionResult Index()
         {
             IEnumerable<Product> objProductList = _unitOfWork.Product.GetAll(includeProperties: "Category").ToList();
