@@ -1,0 +1,33 @@
+﻿@model BookStore.Models.ViewModels.RegisterViewModel
+
+<div class="card shadow-3">
+    <div class="card-header">
+        <h3>Register</h3>
+    </div>
+    <form asp-action="AddUser" method="post">
+        <div class="mb-3">
+            <label asp-for="UserName" class="form-label"></label>
+            <input asp-for="UserName" class="form-control form-control-lg" />
+            <span asp-validation-for="UserName" class="text-danger field-error"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="Email" class="form-label"></label>
+            <input asp-for="Email" class="form-control form-control-lg" />
+            <span asp-validation-for="Email" class="text-danger field-error"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="Password" class="form-label"></label>
+            <input asp-for="Password" class="form-control form-control-lg" />
+            <span asp-validation-for="Password" class="text-danger field-error"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="ConfirmPassword" class="form-label"></label>
+            <input asp-for="ConfirmPassword" class="form-control form-control-lg" />
+            <span asp-validation-for="ConfirmPassword" class="text-danger field-error"></span>
+        </div>
+
+        <div class="form-actions d-flex flex-wrap gap-2">
+            <button type="submit" class="btn btn-primary btn-wide">Register</button
+        </div>
+    </form>
+</div>
