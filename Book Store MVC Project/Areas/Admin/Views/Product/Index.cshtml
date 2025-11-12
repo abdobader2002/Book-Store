@@ -1,75 +1,11 @@
-﻿@* @model List<Product>
+﻿@model List<Product>
 
-<div class="create-card shadow-sm p-4 bg-white rounded">
-
-    <!-- Header -->
-    <div class="create-header mb-4 border-bottom pb-3">
-        <div class="d-flex justify-content-between align-items-center">
-            <h2 class="h5 mb-0 text-dark fw-bold">
-                <i class="bi bi-list-task me-2 text-success"></i> Product List
-            </h2>
-            <a asp-controller="Product" asp-action="Create" class="btn btn-success px-3">
-                <i class="bi bi-plus-circle me-1"></i> Create New Product
-            </a>
-        </div>
-    </div>
-
-    <!-- Table -->
-    <div class="table-responsive">
-        <table class="table table-bordered table-hover align-middle text-center mb-0">
-            <thead class="table-success">
-                <tr>
-                    <th scope="col">Product Name</th>
-                    <th scope="col">Display Order</th>
-                    <th scope="col">Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                @if (Model != null && Model.Any())
-                {
-                    @foreach (var obj in Model.OrderBy(u => u.DisplayOrder))
-                    {
-                        <tr>
-                            <td>@obj.Name</td>
-                            <td>@obj.DisplayOrder</td>
-                            <td>
-                                <div class="btn-group" role="group">
-                                    <a asp-controller="Product" asp-action="Edit" asp-route-id="@obj.Id"
-                                       class="btn btn-primary btn-sm">
-                                        <i class="bi bi-pencil-square"></i> Edit
-                                    </a>
-                                    <a asp-controller="Product" asp-action="Delete" asp-route-id="@obj.Id"
-                                       class="btn btn-danger btn-sm ms-1">
-                                        <i class="bi bi-trash-fill"></i> Delete
-                                    </a>
-                                </div>
-                            </td>
-                        </tr>
-                    }
-                }
-                else
-                {
-                    <tr>
-                        <td colspan="3" class="text-muted">No categories found.</td>
-                    </tr>
-                }
-            </tbody>
-        </table>
-    </div>
-
-</div>
-
-
- *@
-
-@model List<Product>
-
-<div class="create-card">
+<div class="create-card w-100">
 
     <div class="create-header">
         <div class="d-flex justify-content-between align-items-center w-100">
             <h2 class="h5 mb-0">Product List</h2>
-            <a asp-controller="Product" asp-action="Create" class="btn btn-success">
+            <a asp-controller="Product" asp-action="Upsert" class="btn btn-success">
                 <i class="bi bi-plus-circle"></i> Create New Product
             </a>
         </div>
@@ -79,7 +15,7 @@
 
     <div class="table-responsive">
         
-        <table class="table table-bordered table-striped mb-0 text-center align-middle ">
+        <table id="dataTable" class="table table-bordered table-striped mb-0 text-center align-middle w-100 ">
             <thead>
                 <tr>
                     <th>Title</th>
@@ -91,7 +27,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach (var obj in Model)
+                @* @foreach (var obj in Model)
                 {
                     <tr>
                         <td>@obj.Title</td>
@@ -99,11 +35,11 @@
                         <td>@obj.ListPrice</td>
                         <td>@obj.Author</td>
                         <td>
-                            
+                            @obj.Category.Name
                         </td>
                         <td>
                             <div class="btn-group" role="group">
-                                <a asp-controller="Product" asp-action="Edit" asp-route-id="@obj.Id" class="btn btn-primary">
+                                <a asp-controller="Product" asp-action="Upsert" asp-route-id="@obj.Id" class="btn btn-primary">
                                     <i class="bi bi-pencil-square"></i> Edit
                                 </a>
                                 <a asp-controller="Product" asp-action="Delete" asp-route-id="@obj.Id" class="btn btn-danger">
@@ -112,13 +48,16 @@
                             </div>
                         </td>
                     </tr>
-                }
+                } *@
             </tbody>
         </table>
     </div>
 </div>
 
-
+@section Scripts
+{
+    <script src="~/js/product.js"></script>
+}
 
 
 @* @model List<Product>
