@@ -2,6 +2,7 @@
 using BookStore.Models.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace Book_Store_MVC_Project.Areas.Identity.Controllers
 {
@@ -41,7 +42,7 @@ namespace Book_Store_MVC_Project.Areas.Identity.Controllers
                     await userManager.AddToRoleAsync(appUser, "Customer");
 
                     await signInManager.SignInAsync(appUser, false);
-                    return RedirectToAction("Index", "Product", new { area = "Customer" });
+                    return RedirectToAction("Index", "Home", new { area = "Customer" });
                 }
 
                 foreach (var item in result.Errors)
@@ -52,11 +53,47 @@ namespace Book_Store_MVC_Project.Areas.Identity.Controllers
 
             return View("Register", registerViewModel);
         }
-
-        public IActionResult Login(string? returnUrl = null)
+        public IActionResult Login()
         {
-            return View();
+            return View("Login");
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> SaveLogin(LoginViewModel userViewModel)
+        {
+            if (ModelState.IsValid == true)
+            {
+                //check found 
+                ApplicationUser appUser =
+                    await userManager.FindByNameAsync(userViewModel.UserName);
+                if (appUser != null)
+                {
+                    bool found =
+                         await userManager.CheckPasswordAsync(appUser, userViewModel.Password);
+                    if (found == true)
+                    {
+                        List<Claim> Claims = new List<Claim>();
+                        Claims.Add(new Claim("UserAddress", appUser.Email));
+
+                        await signInManager.SignInWithClaimsAsync(appUser, userViewModel.StayLogged, Claims);
+                        //await signInManager.SignInAsync(appUser, userViewModel.RememberMe);
+                        return RedirectToAction("Index", "Home", new { area = "Customer" });
+                    }
+
+                }
+                ModelState.AddModelError("", "Username OR PAssword wrong");
+                //create cookie
+            }
+            return View("Login", userViewModel);
+        }
+
+        public async Task<IActionResult> LogOut()
+        {
+            await signInManager.SignOutAsync();
+            return View("Login");
         }
     }
-    }
+}
+    
 

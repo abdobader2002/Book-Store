@@ -9,7 +9,7 @@ namespace Book_Store_MVC_Project
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
 
@@ -34,6 +34,12 @@ namespace Book_Store_MVC_Project
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+            //using (var scope = app.Services.CreateScope())
+            //{
+            //    var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+            //    var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+            //    await BookStore.Data.DbInitializer.SeedRolesAndAdminAsync(userManager, roleManager);
+            //}
             app.Use(async (context, next) =>
             {
                 if (context.Request.Path == "/Account/Login")

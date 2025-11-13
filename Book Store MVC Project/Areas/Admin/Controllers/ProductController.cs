@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 namespace Book_Store_MVC_Project.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = "Admin")]
     public class ProductController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;

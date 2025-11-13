@@ -12,7 +12,13 @@ namespace BookStore.DataAccess.Data
         }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Product> Products { get; set; }
-        public DbSet<ApplicationUser> applicationUsers { get; set; }
+        public DbSet<ApplicationUser> ApplicationUsers { get; set; }
+        public DbSet<UserCustomer> Customers { get; set; }
+        public DbSet<ShopCart> ShopCarts { get; set; }
+        public DbSet<CartItem> CartItems { get; set; }
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<OrderItem> OrderItems { get; set; }
+
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -37,10 +43,7 @@ namespace BookStore.DataAccess.Data
                     Price100Plus = 80.00,
                     CategoryId = 2,
                     ImgUrl=""
-                    }
-                
-                
-                );
+                    });
         }
 
 

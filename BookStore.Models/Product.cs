@@ -1,11 +1,13 @@
 ﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BookStore.Models
 {
-    public class Product
+    public class Product:IEntityTypeConfiguration<Product>
     {
         [Key]
         public int Id { get; set; }
@@ -46,5 +48,19 @@ namespace BookStore.Models
         [ValidateNever]
         public string ImgUrl { get; set; }
 
+        public ICollection<CartItem> cartItems { get; set; }= new List<CartItem>();
+        public ICollection<OrderItem> OrderItems { get; set; }=new List<OrderItem>();
+
+        public void Configure(EntityTypeBuilder<Product> builder)
+        {
+            builder.HasMany(p => p.cartItems)
+                    .WithOne(c => c.Product)
+                    .HasForeignKey(c=>c.productId);
+
+            builder.HasMany(p => p.OrderItems)
+                    .WithOne(o => o.Product)
+                    .HasForeignKey(o => o.ProductId);
+        }
     }
+
 }

@@ -4,9 +4,9 @@
 }
 
 
-<form method="post">
-@*     <input hidden asp-for="ProductId" />
- *@    <div class="card shadow border-0 mt-4 mb-4">
+<form method="post" asp-area="Customer" asp-controller="Cart" asp-action="Add">
+    <input type="hidden" name="productId" value="@Model.Id" />
+    <div class="card shadow border-0 mt-4 mb-4">
         <div class="card-header bg-secondary bg-gradient text-light py-4">
             <div class="row">
                 <div class="col-12 text-center">
@@ -78,24 +78,22 @@
                         <div class="row pl-2 my-3">
                             <p class="text-secondary lh-sm">@Html.Raw(Model.Description)</p>
                         </div>
-                        <div class="row pl-2 mb-3">
-                            <div class="col-md-4">
-                                @* <div class="input-group mb-3">
-                                    <span class="input-group-text bg-primary text-white border-0 fw-semibold"
-                                          id="inputGroup-sizing-default">
-                                        Count
-                                    </span>
-                                    <input asp-for="Count" type="number" value="1" class="form-control text-end"
-                                           aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" />
-
-                                </div> *@
+                        <div class="col-md-4">
+                            <div class="input-group mb-3">
+                                <span class="input-group-text bg-primary text-white border-0 fw-semibold"
+                                      id="inputGroup-sizing-default">
+                                    Count
+                                </span>
+                                <input name="quantity" type="number" value="1" min="1"
+                                       class="form-control text-end"
+                                       aria-label="Quantity" aria-describedby="inputGroup-sizing-default" />
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-12 col-md-6 pb-1">
                                 <button type="submit"
-                                        class="btn btn-primary bg-gradient  w-100 py-2 text-uppercase fw-semibold">
-                                    Add to Cart 
+                                        class="btn btn-primary bg-gradient w-100 py-2 text-uppercase fw-semibold">
+                                    Add to Cart
                                 </button>
                             </div>
                         </div>

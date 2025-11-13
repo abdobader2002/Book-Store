@@ -6,22 +6,55 @@
 <ul class="navbar-nav">
     @if (SignInManager.IsSignedIn(User))
     {
+        var currentUser = await UserManager.GetUserAsync(User);
+        bool isAdmin = currentUser != null && await UserManager.IsInRoleAsync(currentUser, "Admin");
+        bool isCustomer = currentUser != null && await UserManager.IsInRoleAsync(currentUser, "Customer");
+        if (isAdmin)
+        {
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Content Managment
+                </a>
+                <ul class="dropdown-menu">
+                    <li class="nav-item">
+                        <a class="dropdown-item" asp-area="Admin" asp-controller="Category" asp-action="Index">Category</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="dropdown-item" asp-area="Admin" asp-controller="Product" asp-action="Index">Product</a>
+                    </li>
+                    @* <li><hr class="dropdown-divider"></li> *@
+
+                </ul>
+            </li>
+        }
+        else if (isCustomer)
+        {
+            <a class="nav-link text-light" asp-area="Customer" asp-controller="Cart" asp-action="Index" role="button">
+                cart
+            </a>
+        }
         <li class="nav-item">
-            <a id="manage" class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">
+            <a id="manage" class="nav-link text-light"
+            asp-area="Customer" 
+            asp-controller="Home" 
+            asp-action="Index">
                 Hello @UserManager.GetUserName(User)!
             </a>
         </li>
         <li class="nav-item">
             <form id="logoutForm" class="form-inline"
                   asp-area="Identity"
-                  asp-page="/Account/Logout"
-                  asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-                <button id="logout" type="submit" class="nav-link btn btn-link text-dark border-0">Logout</button>
+                  asp-controller="Account"
+                  asp-action="LogOut">
+                <button id="logout" type="submit" class="nav-link btn btn-link text-light border-0">Logout</button>
             </form>
         </li>
     }
     else
     {
+        <a class="nav-link " asp-area="Customer" asp-controller="Home" asp-action="Index" role="button">
+            cart
+        </a>
         <li class="nav-item">
             <a class="nav-link text-light" id="register"
                asp-area="Identity"
@@ -34,7 +67,7 @@
             <a class="nav-link text-light" id="login"
                asp-area="Identity"
                asp-controller="Account"
-               asp-action="Login">
+               asp-action="LogIn">
                 Login
             </a>
         </li>
