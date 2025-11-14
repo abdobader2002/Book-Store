@@ -9,7 +9,6 @@ namespace BookStore.Data
             UserManager<ApplicationUser> userManager,
             RoleManager<IdentityRole> roleManager)
         {
-            // Step 1: Create roles if they don't exist
             string[] roleNames = { "Admin", "Customer" };
             foreach (var roleName in roleNames)
             {
