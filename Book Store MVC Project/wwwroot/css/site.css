@@ -9,7 +9,11 @@ body {
 .dashboard-container {
     min-height: 100vh;
 }
-
+.card-img-top {
+    height: 250px; 
+    object-fit: cover; 
+    width: 100%;
+}
 aside {
     background-color: #fff;
     box-shadow: 2px 0 5px rgba(0,0,0,0.1);

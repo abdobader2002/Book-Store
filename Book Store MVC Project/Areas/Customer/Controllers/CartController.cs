@@ -65,7 +65,15 @@ namespace Book_Store_MVC_Project.Areas.Customer.Controllers
             var cartItem = cart.Items.FirstOrDefault(ci => ci.productId == productId);
             if (cartItem != null)
             {
-                cartItem.productCount += quantity;
+                if (quantity > 0)
+                {
+                    cartItem.productCount = quantity;
+                }
+                else
+                {
+                    cartItem.productCount += quantity;
+                }
+                    
                 _context.CartItems.Update(cartItem);
             }
             else
@@ -116,6 +124,8 @@ namespace Book_Store_MVC_Project.Areas.Customer.Controllers
 
             return View(cart);
         }
+
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult CheckoutPost()
@@ -175,6 +185,27 @@ namespace Book_Store_MVC_Project.Areas.Customer.Controllers
             if (order == null)
                 return NotFound();
 
+            return View(order);
+        }
+
+        public IActionResult OrderHistory()
+        {
+            var userId = _userManager.GetUserId(User);
+            var orders = _context.Orders
+                .Include(o => o.OrderItems)
+                .ThenInclude(oi => oi.Product)
+                .Where(o => o.CustomerUserId == userId)
+                .ToList();
+            return View(orders);
+        }
+        public IActionResult OrderDetails(int id)
+        {
+            var order = _context.Orders
+                .Include(o => o.OrderItems)
+                .ThenInclude(oi => oi.Product)
+                .FirstOrDefault(o => o.Id == id);
+            if (order == null)
+                return NotFound();
             return View(order);
         }
 
