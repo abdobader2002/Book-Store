@@ -1,0 +1,100 @@
+﻿body {
+    background-color: #f8f9fa;
+}
+
+.dashboard-container {
+    min-height: 100vh;
+}
+
+aside {
+    background-color: #fff;
+    box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+    min-height: 100vh;
+    padding: 0;
+}
+
+.menu-item {
+    padding: 15px 20px;
+    border-bottom: 1px solid #e9ecef;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: #212529;
+}
+
+    .menu-item:hover {
+        background-color: #f8f9fa;
+        color: #0d6efd;
+    }
+
+    .menu-item.active {
+        background-color: #0d6efd;
+        color: white;
+        border-left: 4px solid #0a58ca;
+    }
+
+    .menu-item i {
+        margin-right: 10px;
+        font-size: 1.2rem;
+    }
+
+    .menu-item.delete-account {
+        color: #dc3545;
+    }
+
+        .menu-item.delete-account:hover {
+            background-color: #fff5f5;
+            color: #dc3545;
+        }
+
+main {
+    padding: 30px;
+}
+
+.info-card {
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    padding: 25px;
+    margin-bottom: 20px;
+}
+
+.info-row {
+    padding: 15px 0;
+    border-bottom: 1px solid #e9ecef;
+}
+
+    .info-row:last-child {
+        border-bottom: none;
+    }
+
+.info-label {
+    font-weight: 600;
+    color: #6c757d;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.info-value {
+    font-size: 1.1rem;
+    color: #212529;
+    margin-top: 5px;
+}
+
+.dashboard-header {
+    margin-bottom: 30px;
+}
+
+.badge-status {
+    font-size: 0.85rem;
+    padding: 5px 12px;
+}
+
+@media (max-width: 768px) {
+    aside {
+        min-height: auto;
+    }
+}

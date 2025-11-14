@@ -1,0 +1,50 @@
+﻿@model ShopCart
+
+@{
+    ViewData["Title"] = "Order Summary";
+}
+
+<h2 class="mt-4">Order Summary</h2>
+
+@if (!Model.Items.Any())
+{
+    <div class="alert alert-warning">Your cart is empty.</div>
+    return;
+}
+
+<table class="table table-bordered mt-3">
+    <thead class="table-light">
+        <tr>
+            <th>Product</th>
+            <th>Unit Price</th>
+            <th>Quantity</th>
+            <th>Subtotal</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Items)
+        {
+            <tr>
+                <td>@item.Product.Title</td>
+                <td>@item.Product.price $</td>
+                <td>@item.productCount</td>
+                <td>@(item.Product.price* item.productCount) $</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<hr />
+
+<div class="d-flex justify-content-between">
+    <h4>Total:</h4>
+    <h4 class="text-success fw-bold">
+        @Model.Items.Sum(i => i.productCount * i.Product.price) $
+    </h4>
+</div>
+
+<form asp-action="CheckoutPost" method="post">
+    <button class="btn btn-primary w-100 mt-3 py-2 fw-semibold">
+        Place Order
+    </button>
+</form>

@@ -101,5 +101,84 @@ namespace Book_Store_MVC_Project.Areas.Customer.Controllers
 
             return RedirectToAction("Index");
         }
+        [HttpGet]
+        public IActionResult Checkout()
+        {
+            var userId = _userManager.GetUserId(User);
+
+            var cart = _context.ShopCarts
+                .Include(c => c.Items)
+                .ThenInclude(i => i.Product)
+                .FirstOrDefault(c => c.userID == userId);
+
+            if (cart == null || !cart.Items.Any())
+                return RedirectToAction("Index"); 
+
+            return View(cart);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult CheckoutPost()
+        {
+            var userId = _userManager.GetUserId(User);
+
+            var cart = _context.ShopCarts
+                .Include(c => c.Items)
+                .ThenInclude(i => i.Product)
+                .FirstOrDefault(c => c.userID == userId);
+
+            if (cart == null || !cart.Items.Any())
+                return RedirectToAction("Index"); 
+
+            var order = new Order
+            {
+                CustomerUserId = userId,
+                OrderDate = DateTime.Now,
+                Status = "Pending"
+            };
+
+            _context.Orders.Add(order);
+            _context.SaveChanges();
+
+            double total = 0;
+
+            foreach (var item in cart.Items)
+            {
+                var orderItem = new OrderItem
+                {
+                    OrderId = order.Id,
+                    ProductId = item.productId,
+                    Quantity = item.productCount,
+                    ProductUnitPrice = item.Product.price
+                };
+
+                total += orderItem.ProductUnitPrice * orderItem.Quantity;
+
+                _context.OrderItems.Add(orderItem);
+            }
+
+            order.TotalAmount = total;
+            _context.SaveChanges();
+
+            _context.CartItems.RemoveRange(cart.Items);
+            _context.SaveChanges();
+
+            return RedirectToAction("OrderConfirmation", new { id = order.Id });
+        }
+        public IActionResult OrderConfirmation(int id)
+        {
+            var order = _context.Orders
+                .Include(o => o.OrderItems)
+                .ThenInclude(oi => oi.Product)
+                .FirstOrDefault(o => o.Id == id);
+
+            if (order == null)
+                return NotFound();
+
+            return View(order);
+        }
+
+
+
     }
 }

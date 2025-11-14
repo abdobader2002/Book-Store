@@ -1,0 +1,43 @@
+﻿@model Order
+
+@{
+    ViewData["Title"] = "Order Confirmation";
+}
+
+<div class="alert alert-success mt-4">
+    <h3>Your Order Has Been Placed Successfully!</h3>
+    <p>Order Number: <strong>@Model.Id</strong></p>
+    <p>Date: @Model.OrderDate.ToString("dd/MM/yyyy HH:mm")</p>
+</div>
+
+<h4>Order Details</h4>
+
+<table class="table table-hover mt-3">
+    <thead>
+        <tr>
+            <th>Product</th>
+            <th>Qty</th>
+            <th>Unit Price</th>
+            <th>Subtotal</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.OrderItems)
+        {
+            <tr>
+                <td>@item.Product.Title</td>
+                <td>@item.Quantity</td>
+                <td>@item.ProductUnitPrice $</td>
+                <td>@(item.ProductUnitPrice* item.Quantity) $</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div class="text-end mt-3">
+    <h4>Total: <strong class="text-primary">@Model.TotalAmount $</strong></h4>
+</div>
+
+<a asp-area="Customer" asp-controller="Home" asp-action="Index" class="btn btn-secondary mt-4">
+    Back to Home
+</a>
