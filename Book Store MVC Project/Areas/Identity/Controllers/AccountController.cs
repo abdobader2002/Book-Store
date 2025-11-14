@@ -91,7 +91,7 @@ namespace Book_Store_MVC_Project.Areas.Identity.Controllers
         public async Task<IActionResult> LogOut()
         {
             await signInManager.SignOutAsync();
-            return View("Login");
+            return RedirectToAction("Login", "Account", new { area = "Identity" });
         }
     }
 }
