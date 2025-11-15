@@ -1,11 +1,9 @@
 ﻿@model BookStore.Models.Order
-@{
-    ViewData["Title"] = "Order Details";
-}
+
 <h1>Order Details - Order #@Model.Id</h1>
 <table class="table">
     <thead>
-        <tr>
+        <tr >
             <th>Book Title</th>
             <th>Quantity</th>
             <th>Price</th>
@@ -23,3 +21,4 @@
             </tr>
         }
     </tbody>
+    </table>
