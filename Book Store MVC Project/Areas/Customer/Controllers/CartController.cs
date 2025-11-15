@@ -118,7 +118,12 @@ namespace Book_Store_MVC_Project.Areas.Customer.Controllers
                 .Include(c => c.Items)
                 .ThenInclude(i => i.Product)
                 .FirstOrDefault(c => c.userID == userId);
+            CustomerAddress customerAddress = _context.CustomerAddresses
+                .FirstOrDefault(ca => ca.UserId == userId && ca.IsDefault);
 
+            TempData["CustomerAddress"] = customerAddress != null
+                ? $"{customerAddress.StreetAddress}, {customerAddress.City}, {customerAddress.State}, {customerAddress.PostalCode}"
+                : " ";
             if (cart == null || !cart.Items.Any())
                 return RedirectToAction("Index"); 
 
@@ -138,7 +143,7 @@ namespace Book_Store_MVC_Project.Areas.Customer.Controllers
                 .FirstOrDefault(c => c.userID == userId);
 
             if (cart == null || !cart.Items.Any())
-                return RedirectToAction("Index"); 
+                return RedirectToAction("Index");
 
             var order = new Order
             {

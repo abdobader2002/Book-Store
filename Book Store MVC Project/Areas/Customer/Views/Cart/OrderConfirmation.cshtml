@@ -27,15 +27,15 @@
             <tr>
                 <td>@item.Product.Title</td>
                 <td>@item.Quantity</td>
-                <td>@item.ProductUnitPrice $</td>
-                <td>@(item.ProductUnitPrice* item.Quantity) $</td>
+                <td>@item.ProductUnitPrice.ToString("C")</td>
+                <td>@(item.ProductUnitPrice* item.Quantity).ToString("C")</td>
             </tr>
         }
     </tbody>
 </table>
 
 <div class="text-end mt-3">
-    <h4>Total: <strong class="text-primary">@Model.TotalAmount $</strong></h4>
+    <h4>Total: <strong class="text-primary">@Model.TotalAmount.ToString("C")</strong></h4>
 </div>
 
 <a asp-area="Customer" asp-controller="Home" asp-action="Index" class="btn btn-secondary mt-4">

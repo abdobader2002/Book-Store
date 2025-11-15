@@ -1,5 +1,8 @@
 ﻿@model ShopCart
-
+@using Microsoft.AspNetCore.Identity
+@using BookStore.Models
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
 @{
     ViewData["Title"] = "Order Summary";
 }
@@ -35,6 +38,22 @@
 </table>
 
 <hr />
+@*
+    adding address details 
+*@
+<div>
+@if (TempData["CustomerAddress"]==" ")
+    {
+        <a class="btn btn-outline-info" asp-action="AddAddress" 
+        asp-controller="Account" 
+        asp-area="Identity">add Address</a>
+    }
+    else
+    {
+        <p>@TempData["CustomerAddress"]</p>
+    }
+    
+</div>
 
 <div class="d-flex justify-content-between">
     <h4>Total:</h4>
