@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using BookStore.Models.Enum;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
 using System.Collections.Generic;
@@ -23,7 +24,7 @@ namespace BookStore.Models
         public ICollection<OrderItem> OrderItems { get; set; } = new List<OrderItem>();
 
 
-        public string Status { get; set; } = "Pending";
+        public StatusEnum Status { get; set; } = StatusEnum.Pending;
 
         public void Configure(EntityTypeBuilder<Order> builder)
         {

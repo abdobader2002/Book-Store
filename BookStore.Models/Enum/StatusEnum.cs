@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BookStore.Models
+namespace BookStore.Models.Enum
 {
     public enum StatusEnum
     {

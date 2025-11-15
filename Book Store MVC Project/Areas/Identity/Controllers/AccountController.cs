@@ -64,7 +64,7 @@ namespace Book_Store_MVC_Project.Areas.Identity.Controllers
         {
             if (ModelState.IsValid == true)
             {
-                //check found 
+
                 ApplicationUser appUser =
                     await userManager.FindByNameAsync(userViewModel.UserName);
                 if (appUser != null)
@@ -87,6 +87,12 @@ namespace Book_Store_MVC_Project.Areas.Identity.Controllers
             }
             return View("Login", userViewModel);
         }
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public IActionResult AddAddress()
+        //{
+
+        //}
 
         public async Task<IActionResult> LogOut()
         {

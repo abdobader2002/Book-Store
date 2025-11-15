@@ -1,5 +1,6 @@
 ﻿using BookStore.DataAccess.Data;
 using BookStore.Models;
+using BookStore.Models.Enum;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -149,7 +150,7 @@ namespace Book_Store_MVC_Project.Areas.Customer.Controllers
             {
                 CustomerUserId = userId,
                 OrderDate = DateTime.Now,
-                Status = "Pending"
+                Status = StatusEnum.Pending
             };
 
             _context.Orders.Add(order);
